@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -77,7 +78,7 @@ public class IntentResolver {
             feature = PackageManager.FEATURE_CAMERA_ANY;
         }
 
-        return activity.getPackageManager().hasSystemFeature(feature);
+        return activity.getPackageManager().hasSystemFeature(feature) || Camera.getNumberOfCameras() > 0;
     }
 
     private Intent getCameraIntent() {
@@ -96,7 +97,7 @@ public class IntentResolver {
     }
 
     public void launchCamera(Fragment listener) {
-
+            //https://stackoverflow.com/questions/62535856/intent-resolveactivity-returns-null-in-api-30
             cameraFile().delete();
 
             Intent chooser = Intent.createChooser(getCameraIntent(), setup.getCameraChooserTitle());
@@ -209,8 +210,7 @@ public class IntentResolver {
 
     private String[] getAllPermissionsNeeded() {
         return new String[]{
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                Manifest.permission.CAMERA};
     }
 
     public boolean wasCameraPermissionDeniedForever() {
@@ -232,7 +232,7 @@ public class IntentResolver {
     }
 
     public boolean requestGalleryPermissions(Fragment listener) {
-        return requestPermissions(listener, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        return true;
     }
 
     /**

@@ -1,20 +1,24 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.novoda.bintray-release'
 
-
-group = 'com.github.jrvansuita'
+publish {
+    userOrg = 'appsroxcom'
+    repoName = 'maven'
+    groupId = 'com.appsrox'
+    artifactId = 'pickimage'
+    publishVersion = '2.5.2'
+    desc = 'Shows a DialogFragment with camera and gallery options. User can choose wich provider wants to pick images from.'
+    website = 'https://github.com/appsroxcom/PickImage'
+}
 
 android {
     compileSdkVersion 29
-    buildToolsVersion "28.0.3"
-
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 14
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
     }
-
     sourceSets {
         main.res.srcDirs 'res'
     }
