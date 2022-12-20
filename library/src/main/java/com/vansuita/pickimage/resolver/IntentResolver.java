@@ -7,6 +7,7 @@ import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -70,7 +71,7 @@ public class IntentResolver {
             feature = PackageManager.FEATURE_CAMERA_ANY;
         }
 
-        return activity.getPackageManager().hasSystemFeature(feature);
+        return activity.getPackageManager().hasSystemFeature(feature) || Camera.getNumberOfCameras() > 0;
     }
 
     private Intent getCameraIntent() {
@@ -91,6 +92,7 @@ public class IntentResolver {
     }
 
     public void launchCamera(Fragment listener) {
+        //https://stackoverflow.com/questions/62535856/intent-resolveactivity-returns-null-in-api-30
         cameraFile().delete();
         saveFile = null;
         Intent chooser = getCameraIntent();
